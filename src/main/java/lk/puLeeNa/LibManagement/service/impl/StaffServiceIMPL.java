@@ -2,6 +2,7 @@ package lk.puLeeNa.LibManagement.service.impl;
 
 import lk.puLeeNa.LibManagement.dto.StaffDTO;
 import lk.puLeeNa.LibManagement.service.StaffService;
+import lk.puLeeNa.LibManagement.util.UtilData;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,7 +11,8 @@ import java.util.List;
 public class StaffServiceIMPL implements StaffService {
     @Override
     public void addStaffMember(StaffDTO staffDTO) {
-
+        staffDTO.setStaffId(UtilData.generateStaffId());
+        System.out.println(staffDTO);
     }
 
     @Override

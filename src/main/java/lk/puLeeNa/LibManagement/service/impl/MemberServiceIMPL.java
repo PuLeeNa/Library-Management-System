@@ -2,6 +2,7 @@ package lk.puLeeNa.LibManagement.service.impl;
 
 import lk.puLeeNa.LibManagement.dto.MemberDTO;
 import lk.puLeeNa.LibManagement.service.MemberService;
+import lk.puLeeNa.LibManagement.util.UtilData;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,7 +12,8 @@ public class MemberServiceIMPL implements MemberService {
 
     @Override
     public void addMember(MemberDTO memberDTO) {
-
+        memberDTO.setMemberId(UtilData.generateMemberId());
+        System.out.println(memberDTO);
     }
 
     @Override

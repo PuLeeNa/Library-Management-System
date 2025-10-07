@@ -2,6 +2,7 @@ package lk.puLeeNa.LibManagement.service.impl;
 
 import lk.puLeeNa.LibManagement.dto.BookDTO;
 import lk.puLeeNa.LibManagement.service.BookService;
+import lk.puLeeNa.LibManagement.util.UtilData;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,7 +13,8 @@ public class BookServiceIMPL implements BookService {
 
     @Override
     public void addBook(BookDTO bookDTO) {
-        System.out.println("Book Added");
+        bookDTO.setBookId(UtilData.generateBookId());
+        System.out.println(bookDTO);
     }
 
     @Override
