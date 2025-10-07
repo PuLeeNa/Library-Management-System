@@ -9,5 +9,5 @@ public interface BookService {
     void deleteBook(String bookId);
     void updateBook(String bookId, BookDTO bookDTO);
     BookDTO getSelectedBook(String bookId);
-    List<BookDTO> getSelectedBooks();
+    List<BookDTO> getAllBooks();
 }

@@ -25,68 +25,27 @@ public class BookControler {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> addBook(@RequestBody BookDTO bookDTO){
         bookService.addBook(bookDTO);
-        System.out.println(bookDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
     @DeleteMapping
     public ResponseEntity<Void> deleteBook(@RequestParam ("bookId") String bookId){
-        System.out.println(bookId);
+        bookService.deleteBook(bookId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         // return ResponseEntity.noContent().build();
     }
     @PatchMapping(value = "/{bookId}", consumes =  MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> updateBook(@PathVariable String bookId, @RequestBody BookDTO bookDTO){
-        System.out.println(bookId);
-        System.out.println(bookDTO);
+        bookService.updateBook(bookId, bookDTO);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     @GetMapping("/{bookId}")
     public ResponseEntity<BookDTO> getSelectedBook(@PathVariable String bookId){
-        System.out.println(bookId);
-        BookDTO bookDTO = new BookDTO(
-                "B001",
-                "Java Programming",
-                "Herbert Schildt",
-                "8th",
-                "McGraw-Hill Education",
-                "978-1260440232",
-                45.99,
-                10,
-                7,
-                "2023-10-01",
-                "10:30:00"
-        );
+        BookDTO bookDTO = bookService.getSelectedBook(bookId);
         return new ResponseEntity<>(bookDTO, HttpStatus.OK);
     }
     @GetMapping
     public ResponseEntity<List<BookDTO>> getAllBooks(){
-        List<BookDTO> bookDTOList = new ArrayList<>();
-        bookDTOList.add(new BookDTO(
-                "B001",
-                "Java Programming",
-                "Herbert Schildt",
-                "8th",
-                "McGraw-Hill Education",
-                "978-1260440232",
-                45.99,
-                10,
-                7,
-                "2023-10-01",
-                "10:30:00"
-        ));
-        bookDTOList.add(new BookDTO(
-                "B002",
-                "Effective Java",
-                "Joshua Bloch",
-                "3rd",
-                "Addison-Wesley Professional",
-                "978-0134686097",
-                54.99,
-                8,
-                5,
-                "2023-09-15",
-                "14:20:00"
-        ));
+        List<BookDTO> bookDTOList = bookService.getAllBooks();
         return new ResponseEntity<>(bookDTOList, HttpStatus.OK);
     }
 }
