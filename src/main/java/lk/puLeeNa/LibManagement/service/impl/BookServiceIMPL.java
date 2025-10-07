@@ -14,6 +14,8 @@ public class BookServiceIMPL implements BookService {
     @Override
     public void addBook(BookDTO bookDTO) {
         bookDTO.setBookId(UtilData.generateBookId());
+        bookDTO.setLastUpdateDate(String.valueOf(UtilData.generateTodayDate()));
+        bookDTO.setLastUpdateTime(String.valueOf(UtilData.generateCurrentTime()));
         System.out.println(bookDTO);
     }
 
