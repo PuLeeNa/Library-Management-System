@@ -11,7 +11,7 @@ public class BookServiceIMPL implements BookService {
 
     @Override
     public void addBook(BookDTO bookDTO) {
-
+        System.out.println("Book Added");
     }
 
     @Override
