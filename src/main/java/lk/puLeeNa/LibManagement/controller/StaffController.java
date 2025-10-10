@@ -18,10 +18,6 @@ public class StaffController {
     @Autowired // This annotation is used for automatic dependency injection // Injecting the StaffService implementation // It allows us to use the service methods in this controller class without manually instantiating the service
     private StaffService staffService;
 
-    @GetMapping("health")
-    public String healthTest() {
-        return "Staff Controller is Working";
-    }
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> addStaffMember(@RequestBody StaffDTO staffDTO){
         staffService.addStaffMember(staffDTO);

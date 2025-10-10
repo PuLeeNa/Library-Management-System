@@ -17,10 +17,6 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
-    @GetMapping("health")
-    public String healthTest() {
-        return "Member Controller is Working";
-    }
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> addMember(@RequestBody MemberDTO memberDTO) {
         memberService.addMember(memberDTO);
