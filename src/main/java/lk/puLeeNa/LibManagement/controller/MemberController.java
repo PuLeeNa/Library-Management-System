@@ -35,15 +35,29 @@ public class MemberController {
             memberService.deleteMember(memberId);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (MemberNotFoundException e){
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e){
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @PatchMapping(value = "/{memberId}", consumes =  MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> updateMember(@PathVariable String memberId, @RequestBody MemberDTO memberDTO) {
-        memberService.updateMember(memberId, memberDTO);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @PatchMapping(consumes =  MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> updateMember(@RequestParam String memberId, @RequestBody MemberDTO memberDTO) {
+        if (memberId == null || memberDTO == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        try{
+            memberService.updateMember(memberId, memberDTO);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (MemberNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
     @GetMapping("/{memberId}")
     public ResponseEntity<MemberDTO> getSelectedMember(@PathVariable String memberId) {
