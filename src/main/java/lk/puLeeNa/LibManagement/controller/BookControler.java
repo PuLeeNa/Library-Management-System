@@ -1,6 +1,7 @@
 package lk.puLeeNa.LibManagement.controller;
 
 import lk.puLeeNa.LibManagement.dto.BookDTO;
+import lk.puLeeNa.LibManagement.exception.BookNotFoundException;
 import lk.puLeeNa.LibManagement.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,9 +26,17 @@ public class BookControler {
     }
     @DeleteMapping
     public ResponseEntity<Void> deleteBook(@RequestParam ("bookId") String bookId){
-        bookService.deleteBook(bookId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        // return ResponseEntity.noContent().build();
+        try{
+            bookService.deleteBook(bookId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            // return ResponseEntity.noContent().build();
+        }catch (BookNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     @PatchMapping(value = "/{bookId}", consumes =  MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> updateBook(@PathVariable String bookId, @RequestBody BookDTO bookDTO){

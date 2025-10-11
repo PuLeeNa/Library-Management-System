@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lk.puLeeNa.LibManagement.dao.BookDao;
 import lk.puLeeNa.LibManagement.dto.BookDTO;
 import lk.puLeeNa.LibManagement.entities.BookEntity;
+import lk.puLeeNa.LibManagement.exception.BookNotFoundException;
 import lk.puLeeNa.LibManagement.service.BookService;
 import lk.puLeeNa.LibManagement.util.EntityDTOConvert;
 import lk.puLeeNa.LibManagement.util.UtilData;
@@ -36,7 +37,7 @@ public class BookServiceIMPL implements BookService {
     public void deleteBook(String bookId) {
         Optional<BookEntity> foundBook = bookDao.findById(bookId);
         if(!foundBook.isPresent()){
-            throw new RuntimeException("Book not found");
+            throw new BookNotFoundException("Book not found");
         }
         bookDao.deleteById(bookId);
     }
