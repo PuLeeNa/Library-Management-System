@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @NoArgsConstructor // To generate a no-argument constructor
 @AllArgsConstructor // To generate a constructor with all arguments
 @Data // To generate getters, setters, toString, equals, and hashCode methods
@@ -20,7 +22,7 @@ public class StaffEntity {
     private String lastName;
     private String email;
     private String joinDate;
-    private String lastUpdateDate;
+    private LocalDate lastUpdateDate;
     private String phone;
     private Role role;
 }

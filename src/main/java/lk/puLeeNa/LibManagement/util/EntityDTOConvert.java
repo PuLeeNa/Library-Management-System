@@ -2,8 +2,10 @@ package lk.puLeeNa.LibManagement.util;
 
 import lk.puLeeNa.LibManagement.dto.BookDTO;
 import lk.puLeeNa.LibManagement.dto.MemberDTO;
+import lk.puLeeNa.LibManagement.dto.StaffDTO;
 import lk.puLeeNa.LibManagement.entities.BookEntity;
 import lk.puLeeNa.LibManagement.entities.MemberEntity;
+import lk.puLeeNa.LibManagement.entities.StaffEntity;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -36,5 +38,16 @@ public class EntityDTOConvert {
     }
     public List<MemberDTO> toMemberDTOList(List<MemberEntity> memberEntityList) {
         return modelMapper.map(memberEntityList, new TypeToken<List<MemberDTO>>(){}.getType());
+    }
+
+    // Staff
+    public StaffEntity convertStaffDTOToEntity(StaffDTO staffDTO) {
+        return modelMapper.map(staffDTO, StaffEntity.class);
+    }
+    public StaffDTO convertStaffEntityToDTO(StaffEntity staffEntity) {
+        return modelMapper.map(staffEntity, StaffDTO.class);
+    }
+    public List<StaffDTO> toStaffDTOList(List<StaffEntity> staffEntityList) {
+        return modelMapper.map(staffEntityList, new TypeToken<List<StaffDTO>>(){}.getType());
     }
 }
