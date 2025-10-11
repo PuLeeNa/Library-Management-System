@@ -3,6 +3,7 @@ package lk.puLeeNa.LibManagement.service.impl;
 import jakarta.transaction.Transactional;
 import lk.puLeeNa.LibManagement.dao.StaffDao;
 import lk.puLeeNa.LibManagement.dto.StaffDTO;
+import lk.puLeeNa.LibManagement.exception.StaffNotFoundException;
 import lk.puLeeNa.LibManagement.service.StaffService;
 import lk.puLeeNa.LibManagement.util.EntityDTOConvert;
 import lk.puLeeNa.LibManagement.util.UtilData;
@@ -29,7 +30,10 @@ public class StaffServiceIMPL implements StaffService {
 
     @Override
     public void deleteStaffMember(String staffId) {
-
+        if(!staffDao.findById(staffId).isPresent()){
+            throw new StaffNotFoundException("Staff Not Found");
+        }
+        staffDao.deleteById(staffId);
     }
 
     @Override

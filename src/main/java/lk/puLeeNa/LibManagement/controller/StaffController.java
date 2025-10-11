@@ -2,6 +2,7 @@ package lk.puLeeNa.LibManagement.controller;
 
 import lk.puLeeNa.LibManagement.dto.BookDTO;
 import lk.puLeeNa.LibManagement.dto.StaffDTO;
+import lk.puLeeNa.LibManagement.exception.StaffNotFoundException;
 import lk.puLeeNa.LibManagement.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,9 +29,20 @@ public class StaffController {
     }
     @DeleteMapping
     public ResponseEntity<Void> deleteStaffMember(@RequestParam ("staffId") String staffId){
-        staffService.deleteStaffMember(staffId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        // return ResponseEntity.noContent().build();
+        if (staffId == null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        try{
+            staffService.deleteStaffMember(staffId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            // return ResponseEntity.noContent().build();
+        }catch (StaffNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     @PatchMapping(value = "/{staffId}", consumes =  MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> updateStaffMember(@PathVariable String staffId, @RequestBody StaffDTO staffDTO){
