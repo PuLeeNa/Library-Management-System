@@ -56,6 +56,6 @@ public class MemberServiceIMPL implements MemberService {
 
     @Override
     public List<MemberDTO> getAllMembers() {
-        return List.of(new MemberDTO());
+        return entityDTOConvert.toMemberDTOList(memberDao.findAll());
     }
 }
