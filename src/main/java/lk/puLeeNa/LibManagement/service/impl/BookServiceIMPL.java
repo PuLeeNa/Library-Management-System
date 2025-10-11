@@ -1,22 +1,33 @@
 package lk.puLeeNa.LibManagement.service.impl;
 
+import jakarta.transaction.Transactional;
+import lk.puLeeNa.LibManagement.dao.BookDao;
 import lk.puLeeNa.LibManagement.dto.BookDTO;
 import lk.puLeeNa.LibManagement.service.BookService;
+import lk.puLeeNa.LibManagement.util.EntityDTOConvert;
 import lk.puLeeNa.LibManagement.util.UtilData;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor // dependency injection for final fields, so we don't need to use @Autowired
+@Transactional // to manage transactions automatically
 public class BookServiceIMPL implements BookService {
+    // Dependency Injection
+    // @Autowired
+    private final BookDao bookDao;
+    private final EntityDTOConvert entityDTOConvert;
 
     @Override
     public void addBook(BookDTO bookDTO) {
+        // Business Process
         bookDTO.setBookId(UtilData.generateBookId());
-        bookDTO.setLastUpdateDate(String.valueOf(UtilData.generateTodayDate()));
-        bookDTO.setLastUpdateTime(String.valueOf(UtilData.generateCurrentTime()));
-        System.out.println(bookDTO);
+        bookDTO.setLastUpdateDate(UtilData.generateTodayDate());
+        bookDTO.setLastUpdateTime(UtilData.generateCurrentTime());
+        // Pass to Dao
+        var bookEntity = entityDTOConvert.convertBookDTOToEntity(bookDTO);
+        bookDao.save(bookEntity);
     }
 
     @Override
@@ -31,50 +42,11 @@ public class BookServiceIMPL implements BookService {
 
     @Override
     public BookDTO getSelectedBook(String bookId) {
-        return new BookDTO(
-                "B001",
-                "Java Programming",
-                "Herbert Schildt",
-                "8th",
-                "McGraw-Hill Education",
-                "978-1260440232",
-                45.99,
-                10,
-                7,
-                "2023-10-01",
-                "10:30:00"
-        );
+        return null;
     }
 
     @Override
     public List<BookDTO> getAllBooks() {
-        List<BookDTO> bookDTOList = new ArrayList<>();
-        bookDTOList.add(new BookDTO(
-                "B001",
-                "Java Programming",
-                "Herbert Schildt",
-                "8th",
-                "McGraw-Hill Education",
-                "978-1260440232",
-                45.99,
-                10,
-                7,
-                "2023-10-01",
-                "10:30:00"
-        ));
-        bookDTOList.add(new BookDTO(
-                "B002",
-                "Effective Java",
-                "Joshua Bloch",
-                "3rd",
-                "Addison-Wesley Professional",
-                "978-0134686097",
-                54.99,
-                8,
-                5,
-                "2023-09-15",
-                "14:20:00"
-        ));
-        return bookDTOList;
+        return null;
     }
 }
