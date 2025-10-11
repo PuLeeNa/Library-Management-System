@@ -51,12 +51,22 @@ public class BookControler {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/{bookId}")
-    public ResponseEntity<BookDTO> getSelectedBook(@PathVariable String bookId){
-        BookDTO bookDTO = bookService.getSelectedBook(bookId);
-        return new ResponseEntity<>(bookDTO, HttpStatus.OK);
-    }
+//    @GetMapping("/{bookId}")
+//    public ResponseEntity<BookDTO> getSelectedBook(@PathVariable String bookId){
     @GetMapping
+    public ResponseEntity<BookDTO> getSelectedBook(@RequestParam String bookId){
+        try{
+            BookDTO bookDTO = bookService.getSelectedBook(bookId);
+            return new ResponseEntity<>(bookDTO, HttpStatus.OK);
+        }catch (BookNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("getallbooks")
     public ResponseEntity<List<BookDTO>> getAllBooks(){
         List<BookDTO> bookDTOList = bookService.getAllBooks();
         return new ResponseEntity<>(bookDTOList, HttpStatus.OK);
