@@ -38,7 +38,18 @@ public class StaffServiceIMPL implements StaffService {
 
     @Override
     public void updateStaffMember(String staffId, StaffDTO staffDTO) {
-
+        var foundStaff = staffDao.findById(staffId);
+        if(!foundStaff.isPresent()){
+            throw new StaffNotFoundException("Staff Not Found");
+        }
+        foundStaff.get().setFirstName(staffDTO.getFirstName());
+        foundStaff.get().setLastName(staffDTO.getLastName());
+        foundStaff.get().setEmail(staffDTO.getEmail());
+        foundStaff.get().setEmail(staffDTO.getEmail());
+        foundStaff.get().setJoinDate(staffDTO.getJoinDate());
+        foundStaff.get().setPhone(staffDTO.getPhone());
+        foundStaff.get().setLastUpdateDate(UtilData.generateTodayDate());
+        foundStaff.get().setRole(staffDTO.getRole());
     }
 
     @Override
