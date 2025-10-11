@@ -3,6 +3,7 @@ package lk.puLeeNa.LibManagement.service.impl;
 import jakarta.transaction.Transactional;
 import lk.puLeeNa.LibManagement.dao.MemberDao;
 import lk.puLeeNa.LibManagement.dto.MemberDTO;
+import lk.puLeeNa.LibManagement.exception.MemberNotFoundException;
 import lk.puLeeNa.LibManagement.service.MemberService;
 import lk.puLeeNa.LibManagement.util.EntityDTOConvert;
 import lk.puLeeNa.LibManagement.util.UtilData;
@@ -28,7 +29,10 @@ public class MemberServiceIMPL implements MemberService {
 
     @Override
     public void deleteMember(String memberId) {
-
+        if(!memberDao.findById(memberId).isPresent()){
+            throw new MemberNotFoundException("Member not exist");
+        }
+        memberDao.deleteById(memberId);
     }
 
     @Override
