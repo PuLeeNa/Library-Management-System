@@ -75,6 +75,6 @@ public class BookServiceIMPL implements BookService {
 
     @Override
     public List<BookDTO> getAllBooks() {
-        return null;
+        return entityDTOConvert.toBookDTOList(bookDao.findAll());
     }
 }

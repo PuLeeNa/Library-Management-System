@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component // to make this class as a Spring Bean which means the control of creating the object is given to the Spring Container
-@RequiredArgsConstructor // to create a constructor for the final fields
+@RequiredArgsConstructor // to create a constructor for the final fields // dependency injection so we don't need to use @Autowired
 public class EntityDTOConvert {
     private final ModelMapper modelMapper;
 
