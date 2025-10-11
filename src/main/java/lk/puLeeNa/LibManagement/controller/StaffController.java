@@ -60,12 +60,23 @@ public class StaffController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/{staffId}")
-    public ResponseEntity<StaffDTO> getSelectedStaffMember(@PathVariable String staffId){
-        StaffDTO staffDTO = staffService.getSelectedStaffMember(staffId);
-        return new ResponseEntity<>(staffDTO, HttpStatus.OK);
-    }
     @GetMapping
+    public ResponseEntity<StaffDTO> getSelectedStaffMember(@RequestParam String staffId){
+        if(staffId == null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        try{
+            StaffDTO staffDTO = staffService.getSelectedStaffMember(staffId);
+            return new ResponseEntity<>(staffDTO, HttpStatus.OK);
+        }catch (StaffNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("getallstaffs")
     public ResponseEntity<List<StaffDTO>> getAllStaffMembers(){
         List<StaffDTO> staffDTOList = staffService.getAllStaffMembers();
         return new ResponseEntity<>(staffDTOList, HttpStatus.OK);

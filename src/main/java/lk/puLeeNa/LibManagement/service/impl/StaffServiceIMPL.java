@@ -56,7 +56,10 @@ public class StaffServiceIMPL implements StaffService {
 
     @Override
     public StaffDTO getSelectedStaffMember(String staffId) {
-        return null;
+        if(!staffDao.findById(staffId).isPresent()){
+            throw new StaffNotFoundException("Staff Not Found");
+        }
+        return entityDTOConvert.convertStaffEntityToDTO(staffDao.getReferenceById(staffId));
     }
 
     @Override
