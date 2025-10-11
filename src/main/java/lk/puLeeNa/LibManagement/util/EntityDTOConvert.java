@@ -1,7 +1,9 @@
 package lk.puLeeNa.LibManagement.util;
 
 import lk.puLeeNa.LibManagement.dto.BookDTO;
+import lk.puLeeNa.LibManagement.dto.MemberDTO;
 import lk.puLeeNa.LibManagement.entities.BookEntity;
+import lk.puLeeNa.LibManagement.entities.MemberEntity;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -14,7 +16,7 @@ import java.util.List;
 public class EntityDTOConvert {
     private final ModelMapper modelMapper;
 
-    // Book
+    // Books
     public BookEntity convertBookDTOToEntity(BookDTO bookDTO) {
         return modelMapper.map(bookDTO, BookEntity.class);
     } // this is for converting BookDTO to BookEntity for the addBook() and updateBook() methods in the BookService class
@@ -24,4 +26,15 @@ public class EntityDTOConvert {
     public List<BookDTO> toBookDTOList(List<BookEntity> bookEntityList) {
         return modelMapper.map(bookEntityList, new TypeToken<List<BookDTO>>(){}.getType());
     }  // this is for converting List<BookEntity> to List<BookDTO> for the getAllBooks() method in the BookService class
+
+    // Members
+    public MemberEntity convertMemberDTOToEntity(MemberDTO memberDTO) {
+        return modelMapper.map(memberDTO, MemberEntity.class);
+    }
+    public MemberDTO convertMemberEntityToDTO(MemberEntity memberEntity) {
+        return modelMapper.map(memberEntity, MemberDTO.class);
+    }
+    public List<MemberDTO> toMemberDTOList(List<MemberEntity> memberEntityList) {
+        return modelMapper.map(memberEntityList, new TypeToken<List<MemberDTO>>(){}.getType());
+    }
 }
