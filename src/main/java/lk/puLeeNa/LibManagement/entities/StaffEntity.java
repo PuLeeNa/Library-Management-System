@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Time;
 import java.time.LocalDate;
 
 @NoArgsConstructor // To generate a no-argument constructor
@@ -23,6 +24,7 @@ public class StaffEntity {
     private String email;
     private String joinDate;
     private LocalDate lastUpdateDate;
+    private Time lastUpdateTime;
     private String phone;
     private Role role;
 }

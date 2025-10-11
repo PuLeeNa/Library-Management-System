@@ -25,6 +25,7 @@ public class StaffServiceIMPL implements StaffService {
     public void addStaffMember(StaffDTO staffDTO) {
         staffDTO.setStaffId(UtilData.generateStaffId());
         staffDTO.setLastUpdateDate(UtilData.generateTodayDate());
+        staffDTO.setLastUpdateTime(UtilData.generateCurrentTime());
         staffDao.save(entityDTOConvert.convertStaffDTOToEntity(staffDTO));
     }
 
@@ -49,6 +50,7 @@ public class StaffServiceIMPL implements StaffService {
         foundStaff.get().setJoinDate(staffDTO.getJoinDate());
         foundStaff.get().setPhone(staffDTO.getPhone());
         foundStaff.get().setLastUpdateDate(UtilData.generateTodayDate());
+        foundStaff.get().setLastUpdateTime(UtilData.generateCurrentTime());
         foundStaff.get().setRole(staffDTO.getRole());
     }
 
