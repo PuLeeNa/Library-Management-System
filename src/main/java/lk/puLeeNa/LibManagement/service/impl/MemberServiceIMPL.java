@@ -48,7 +48,10 @@ public class MemberServiceIMPL implements MemberService {
 
     @Override
     public MemberDTO getSelectedMember(String memberId) {
-        return new MemberDTO();
+        if(!memberDao.findById(memberId).isPresent()){
+            throw new MemberNotFoundException("Member not exist");
+        }
+        return entityDTOConvert.convertMemberEntityToDTO(memberDao.getReferenceById(memberId));
     }
 
     @Override

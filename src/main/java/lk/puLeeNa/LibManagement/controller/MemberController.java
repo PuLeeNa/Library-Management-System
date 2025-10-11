@@ -59,12 +59,23 @@ public class MemberController {
         }
 
     }
-    @GetMapping("/{memberId}")
-    public ResponseEntity<MemberDTO> getSelectedMember(@PathVariable String memberId) {
-        MemberDTO memberDTO = memberService.getSelectedMember(memberId);
-        return new ResponseEntity<>(memberDTO, HttpStatus.OK);
-    }
     @GetMapping
+    public ResponseEntity<MemberDTO> getSelectedMember(@RequestParam String memberId) {
+        if (memberId == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        try{
+            MemberDTO memberDTO = memberService.getSelectedMember(memberId);
+            return new ResponseEntity<>(memberDTO, HttpStatus.OK);
+        }catch (MemberNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("getallmembers")
     public ResponseEntity<List<MemberDTO>> getAllMembers() {
         List<MemberDTO> memberDTOList = memberService.getAllMembers();
         return new ResponseEntity<>(memberDTOList, HttpStatus.OK);
