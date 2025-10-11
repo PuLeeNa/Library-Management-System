@@ -3,12 +3,14 @@ package lk.puLeeNa.LibManagement.service.impl;
 import jakarta.transaction.Transactional;
 import lk.puLeeNa.LibManagement.dao.BookDao;
 import lk.puLeeNa.LibManagement.dto.BookDTO;
+import lk.puLeeNa.LibManagement.entities.BookEntity;
 import lk.puLeeNa.LibManagement.service.BookService;
 import lk.puLeeNa.LibManagement.util.EntityDTOConvert;
 import lk.puLeeNa.LibManagement.util.UtilData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor // dependency injection for final fields, so we don't need to use @Autowired
@@ -32,7 +34,11 @@ public class BookServiceIMPL implements BookService {
 
     @Override
     public void deleteBook(String bookId) {
-
+        Optional<BookEntity> foundBook = bookDao.findById(bookId);
+        if(!foundBook.isPresent()){
+            throw new RuntimeException("Book not found");
+        }
+        bookDao.deleteById(bookId);
     }
 
     @Override
