@@ -1,6 +1,10 @@
 package lk.puLeeNa.LibManagement.controller;
 
 import lk.puLeeNa.LibManagement.dto.LendingDTO;
+import lk.puLeeNa.LibManagement.exception.BookNotFoundException;
+import lk.puLeeNa.LibManagement.exception.DataPersistException;
+import lk.puLeeNa.LibManagement.exception.EnoughBooksNotFoundException;
+import lk.puLeeNa.LibManagement.exception.MemberNotFoundException;
 import lk.puLeeNa.LibManagement.service.LendingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,8 +26,19 @@ public class LengdingController {
         if(lendingDTO == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        lendingService.addLendingData(lendingDTO);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        try{
+            lendingService.addLendingData(lendingDTO);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }catch (BookNotFoundException | MemberNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (DataPersistException | EnoughBooksNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     @DeleteMapping
     public ResponseEntity<Void> deleteLending(@RequestParam ("lendingId") String lendingId){

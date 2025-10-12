@@ -1,5 +1,6 @@
 package lk.puLeeNa.LibManagement.service.impl;
 
+import jakarta.transaction.Transactional;
 import lk.puLeeNa.LibManagement.dao.BookDao;
 import lk.puLeeNa.LibManagement.dao.LendingDao;
 import lk.puLeeNa.LibManagement.dao.MemberDao;
@@ -22,6 +23,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
+@Transactional
 @Service
 @RequiredArgsConstructor
 public class LendingServiceIMPL implements LendingService {
@@ -47,20 +49,19 @@ public class LendingServiceIMPL implements LendingService {
             // Books are available
             if(bookDao.deductBasedOnLending(bookId)>0){
                 // proceed the lending
+                lendingDTO.setLendingId(UtilData.generateLendingId());
+                lendingDTO.setLendingDate(UtilData.generateTodayDate());
+                lendingDTO.setReturnDate(UtilData.generateReturnDate());
+                lendingDTO.setIsActiveLending(true);
+                lendingDTO.setFineAmount(0.00);
+                lendingDTO.setOverdueDays(0L);
+                lendingDao.save(LendingMapping.toLendingEntity(lendingDTO, bookEntity, memberEntity));
             }else{
                 throw new DataPersistException("Cannot update book data with 0 available qty");
             }
         }else{
             throw new EnoughBooksNotFoundException("Not Enough Books Available");
         }
-
-        lendingDTO.setLendingId(UtilData.generateLendingId());
-        lendingDTO.setLendingDate(UtilData.generateTodayDate());
-        lendingDTO.setReturnDate(UtilData.generateReturnDate());
-        lendingDTO.setIsActiveLending(true);
-        lendingDTO.setFineAmount(0.00);
-        lendingDTO.setOverdueDays(0L);
-        System.out.println(lendingDTO);
     }
 
     @Override
