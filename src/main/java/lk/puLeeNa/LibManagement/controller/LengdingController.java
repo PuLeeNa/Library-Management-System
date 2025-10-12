@@ -19,6 +19,9 @@ public class LengdingController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> addLending(@RequestBody LendingDTO lendingDTO) {
+        if(lendingDTO == null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         lendingService.addLendingData(lendingDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
