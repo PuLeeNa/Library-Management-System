@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -19,8 +21,8 @@ public class LendingEntity {
     @ManyToOne
     @JoinColumn(name = "memberId", nullable = false)
     private MemberEntity member;
-    private String lendingDate;
-    private String returnDate;
+    private LocalDate lendingDate;
+    private LocalDate returnDate;
     private Boolean isActiveLending;
     private Long overdueDays;
     private Double fineAmount;
