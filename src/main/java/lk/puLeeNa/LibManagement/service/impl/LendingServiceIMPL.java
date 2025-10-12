@@ -7,6 +7,7 @@ import lk.puLeeNa.LibManagement.dto.LendingDTO;
 import lk.puLeeNa.LibManagement.entities.BookEntity;
 import lk.puLeeNa.LibManagement.entities.MemberEntity;
 import lk.puLeeNa.LibManagement.exception.BookNotFoundException;
+import lk.puLeeNa.LibManagement.exception.DataPersistException;
 import lk.puLeeNa.LibManagement.exception.EnoughBooksNotFoundException;
 import lk.puLeeNa.LibManagement.exception.MemberNotFoundException;
 import lk.puLeeNa.LibManagement.service.LendingService;
@@ -44,6 +45,11 @@ public class LendingServiceIMPL implements LendingService {
         // Check the availability
         if(bookDao.availQty(bookId)>0){
             // Books are available
+            if(bookDao.deductBasedOnLending(bookId)>0){
+                // proceed the lending
+            }else{
+                throw new DataPersistException("Cannot update book data with 0 available qty");
+            }
         }else{
             throw new EnoughBooksNotFoundException("Not Enough Books Available");
         }
