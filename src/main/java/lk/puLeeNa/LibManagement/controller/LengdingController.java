@@ -42,7 +42,7 @@ public class LengdingController {
         lendingService.deleteLendingData(lendingId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    @PatchMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PatchMapping
     public ResponseEntity<Void> handOverBook(@RequestParam ("lendingId") String lendingId){
         try{
             lendingService.handOverBook(lendingId);
