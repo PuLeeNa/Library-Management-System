@@ -1,10 +1,7 @@
 package lk.puLeeNa.LibManagement.controller;
 
 import lk.puLeeNa.LibManagement.dto.LendingDTO;
-import lk.puLeeNa.LibManagement.exception.BookNotFoundException;
-import lk.puLeeNa.LibManagement.exception.DataPersistException;
-import lk.puLeeNa.LibManagement.exception.EnoughBooksNotFoundException;
-import lk.puLeeNa.LibManagement.exception.MemberNotFoundException;
+import lk.puLeeNa.LibManagement.exception.*;
 import lk.puLeeNa.LibManagement.service.LendingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,8 +44,16 @@ public class LengdingController {
     }
     @PatchMapping(value ="/{lendingId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> handOverBook(@PathVariable String lendingId, @RequestBody LendingDTO lendingDTO){
-        lendingService.handOverBook(lendingId, lendingDTO);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        try{
+            lendingService.handOverBook(lendingId, lendingDTO);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (LendingDataNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     @GetMapping("/{lendingId}")
     public ResponseEntity<LendingDTO> getSelectedLending(@PathVariable String lendingId){
