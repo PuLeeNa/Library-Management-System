@@ -42,10 +42,10 @@ public class LengdingController {
         lendingService.deleteLendingData(lendingId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    @PatchMapping(value ="/{lendingId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> handOverBook(@PathVariable String lendingId, @RequestBody LendingDTO lendingDTO){
+    @PatchMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> handOverBook(@RequestParam ("lendingId") String lendingId){
         try{
-            lendingService.handOverBook(lendingId, lendingDTO);
+            lendingService.handOverBook(lendingId);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (LendingDataNotFoundException e){
             e.printStackTrace();

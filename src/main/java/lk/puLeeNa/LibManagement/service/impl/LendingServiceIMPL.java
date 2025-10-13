@@ -68,7 +68,7 @@ public class LendingServiceIMPL implements LendingService {
     }
 
     @Override
-    public void handOverBook(String lendingId, LendingDTO lendingDTO) {
+    public void handOverBook(String lendingId) {
         // Check the details of the lending record
         LendingEntity foundLending = lendingDao.findById(lendingId).orElseThrow(() -> new LendingDataNotFoundException("Lending data not found"));
         // Check overdue days and fine amount
