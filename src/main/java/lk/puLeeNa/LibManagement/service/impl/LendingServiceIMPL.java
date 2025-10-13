@@ -6,11 +6,9 @@ import lk.puLeeNa.LibManagement.dao.LendingDao;
 import lk.puLeeNa.LibManagement.dao.MemberDao;
 import lk.puLeeNa.LibManagement.dto.LendingDTO;
 import lk.puLeeNa.LibManagement.entities.BookEntity;
+import lk.puLeeNa.LibManagement.entities.LendingEntity;
 import lk.puLeeNa.LibManagement.entities.MemberEntity;
-import lk.puLeeNa.LibManagement.exception.BookNotFoundException;
-import lk.puLeeNa.LibManagement.exception.DataPersistException;
-import lk.puLeeNa.LibManagement.exception.EnoughBooksNotFoundException;
-import lk.puLeeNa.LibManagement.exception.MemberNotFoundException;
+import lk.puLeeNa.LibManagement.exception.*;
 import lk.puLeeNa.LibManagement.service.LendingService;
 import lk.puLeeNa.LibManagement.util.EntityDTOConvert;
 import lk.puLeeNa.LibManagement.util.LendingMapping;
@@ -71,7 +69,16 @@ public class LendingServiceIMPL implements LendingService {
 
     @Override
     public void handOverBook(String lendingId, LendingDTO lendingDTO) {
+        // Check the details of the lending record
+        LendingEntity foundLending = lendingDao.findById(lendingId).orElseThrow(() -> new LendingDataNotFoundException("Lending data not found"));
+        // Check overdue days and fine amount
+        var returnDate = foundLending.getReturnDate();
+        var overDue = calcOverDue(returnDate);
+        var fineAmount = calcFine(overDue);
 
+        foundLending.setOverdueDays(overDue);
+        foundLending.setFineAmount(fineAmount);
+        foundLending.setIsActiveLending(false);
     }
 
     @Override
@@ -84,9 +91,8 @@ public class LendingServiceIMPL implements LendingService {
         return List.of();
     }
 
-    private Long calcOverDue() {
+    private Long calcOverDue(LocalDate returnDate) {
         LocalDate today = UtilData.generateTodayDate();
-        LocalDate returnDate = UtilData.generateReturnDateCalc();
         if(returnDate.isBefore(today)){
             return ChronoUnit.DAYS.between(today,returnDate);
         }
