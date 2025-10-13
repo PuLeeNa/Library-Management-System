@@ -79,6 +79,9 @@ public class LendingServiceIMPL implements LendingService {
         foundLending.setOverdueDays(overDue);
         foundLending.setFineAmount(fineAmount);
         foundLending.setIsActiveLending(false);
+
+        // update book qty against bookId
+        bookDao.addBasedOnReturning(foundLending.getBook().getBookId());
     }
 
     @Override
