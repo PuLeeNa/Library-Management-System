@@ -1,9 +1,11 @@
 package lk.puLeeNa.LibManagement.util;
 
 import lk.puLeeNa.LibManagement.dto.BookDTO;
+import lk.puLeeNa.LibManagement.dto.LendingDTO;
 import lk.puLeeNa.LibManagement.dto.MemberDTO;
 import lk.puLeeNa.LibManagement.dto.StaffDTO;
 import lk.puLeeNa.LibManagement.entities.BookEntity;
+import lk.puLeeNa.LibManagement.entities.LendingEntity;
 import lk.puLeeNa.LibManagement.entities.MemberEntity;
 import lk.puLeeNa.LibManagement.entities.StaffEntity;
 import lombok.RequiredArgsConstructor;
@@ -49,5 +51,10 @@ public class EntityDTOConvert {
     }
     public List<StaffDTO> toStaffDTOList(List<StaffEntity> staffEntityList) {
         return modelMapper.map(staffEntityList, new TypeToken<List<StaffDTO>>(){}.getType());
+    }
+
+    // Lending - List data handle only
+    public List<LendingDTO> getLendingDTOList(List<LendingEntity> lendingEntityList) {
+        return modelMapper.map(lendingEntityList, new TypeToken<List<LendingDTO>>(){}.getType());
     }
 }
