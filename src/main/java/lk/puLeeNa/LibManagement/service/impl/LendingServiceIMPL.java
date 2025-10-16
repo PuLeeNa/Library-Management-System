@@ -68,7 +68,9 @@ public class LendingServiceIMPL implements LendingService {
         var foundLending = lendingDao.findById(lendingId).orElseThrow(() -> new LendingDataNotFoundException("Lending data not found"));
         lendingDao.deleteById(lendingId);
         // add the book when the lending data is deleted
-        bookDao.addBasedOnReturning(foundLending.getBook().getBookId());
+        if(foundLending.getIsActiveLending() == true){
+            bookDao.addBasedOnReturning(foundLending.getBook().getBookId());
+        }
     }
 
     @Override
