@@ -6,6 +6,9 @@ import lk.puLeeNa.LibManagement.entities.LendingEntity;
 import lk.puLeeNa.LibManagement.entities.MemberEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class LendingMapping {
     public static LendingDTO toLendingDTO(LendingEntity lendingEntity){
@@ -31,5 +34,28 @@ public class LendingMapping {
         lendingEntity.setOverdueDays(lendingDTO.getOverdueDays());
         lendingEntity.setFineAmount(lendingDTO.getFineAmount());
         return lendingEntity;
+    }
+
+    public List<LendingDTO> getLendingDTOList(List<LendingEntity> lendingEntityList) {
+        return lendingEntityList.stream().map(entity -> {
+            LendingDTO lendingDTOData = new LendingDTO();
+            lendingDTOData.setLendingId(entity.getLendingId());
+
+            if(entity.getBook()!=null){
+                lendingDTOData.setBook(entity.getBook().getBookId());
+            }
+
+            if(entity.getMember()!=null){
+                lendingDTOData.setMember(entity.getMember().getMemberId());
+            }
+
+            lendingDTOData.setLendingDate(entity.getLendingDate());
+            lendingDTOData.setReturnDate(entity.getReturnDate());
+            lendingDTOData.setIsActiveLending(entity.getIsActiveLending());
+            lendingDTOData.setOverdueDays(entity.getOverdueDays());
+            lendingDTOData.setFineAmount(entity.getFineAmount());
+
+            return lendingDTOData;
+        }).collect(Collectors.toList());
     }
 }
