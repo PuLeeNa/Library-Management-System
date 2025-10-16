@@ -68,8 +68,19 @@ public class LengdingController {
     }
     @GetMapping
     public ResponseEntity<LendingDTO> getSelectedLending(@RequestParam ("lendingId") String lendingId){
-        LendingDTO lendingDTO = lendingService.getSelectedLendingData(lendingId);
-        return new ResponseEntity<>(lendingDTO, HttpStatus.OK);
+        if(lendingId == null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        try{
+            LendingDTO lendingDTO = lendingService.getSelectedLendingData(lendingId);
+            return new ResponseEntity<>(lendingDTO, HttpStatus.OK);
+        }catch (LendingDataNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     @GetMapping("getalllendings")
     public ResponseEntity<List<LendingDTO>> getAllLendings(){
