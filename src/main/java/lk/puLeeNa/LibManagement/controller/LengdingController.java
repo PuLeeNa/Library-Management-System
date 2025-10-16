@@ -66,12 +66,12 @@ public class LengdingController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/{lendingId}")
-    public ResponseEntity<LendingDTO> getSelectedLending(@PathVariable String lendingId){
+    @GetMapping
+    public ResponseEntity<LendingDTO> getSelectedLending(@RequestParam ("lendingId") String lendingId){
         LendingDTO lendingDTO = lendingService.getSelectedLendingData(lendingId);
         return new ResponseEntity<>(lendingDTO, HttpStatus.OK);
     }
-    @GetMapping
+    @GetMapping("getalllendings")
     public ResponseEntity<List<LendingDTO>> getAllLendings(){
         List<LendingDTO> lendingDTOList = lendingService.getAllLendingData();
         return new ResponseEntity<>(lendingDTOList, HttpStatus.OK);
