@@ -3,6 +3,8 @@ package lk.puLeeNa.LibManagement.controller;
 import lk.puLeeNa.LibManagement.dto.BookDTO;
 import lk.puLeeNa.LibManagement.exception.BookNotFoundException;
 import lk.puLeeNa.LibManagement.service.BookService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,11 +18,14 @@ import java.util.List;
 @RequestMapping("/api/v1/books")
 public class BookControler {
 
+    private static final Logger logger = LoggerFactory.getLogger(BookControler.class);
+
     @Autowired
     private BookService bookService;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> addBook(@RequestBody BookDTO bookDTO){
+        logger.info("Call the addBook() with param {}", bookDTO);
         if(bookDTO == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
