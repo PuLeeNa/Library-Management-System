@@ -43,7 +43,7 @@ public class MemberServiceIMPL implements MemberService {
         }
         selectedMember.get().setName(memberDTO.getName());
         selectedMember.get().setEmail(memberDTO.getEmail());
-        selectedMember.get().setMembershipDate(UtilData.generateTodayDate());
+        selectedMember.get().setMembershipDate(memberDTO.getMembershipDate());
     }
 
     @Override

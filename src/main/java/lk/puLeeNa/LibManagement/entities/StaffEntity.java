@@ -22,7 +22,7 @@ public class StaffEntity {
     private String firstName;
     private String lastName;
     private String email;
-    private String joinDate;
+    private LocalDate joinDate;
     private LocalDate lastUpdateDate;
     private Time lastUpdateTime;
     private String phone;
