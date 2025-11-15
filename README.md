@@ -1,4 +1,4 @@
-# Library Management System
+# 📚 LibraFlow - Library Management System (Backend)
 
 Link to Front-End - https://github.com/PuLeeNa/LibManagement-FE
 
