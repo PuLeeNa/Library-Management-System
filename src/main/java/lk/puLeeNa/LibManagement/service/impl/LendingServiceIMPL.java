@@ -50,7 +50,7 @@ public class LendingServiceIMPL implements LendingService {
                 lendingDTO.setLendingId(UtilData.generateLendingId());
                 lendingDTO.setLendingDate(UtilData.generateTodayDate());
                 lendingDTO.setReturnDate(UtilData.generateReturnDate());
-                lendingDTO.setIsActiveLending(true);
+                lendingDTO.setIsActiveLending("true");
                 lendingDTO.setFineAmount(0.00);
                 lendingDTO.setOverdueDays(0L);
                 lendingDao.save(LendingMapping.toLendingEntity(lendingDTO, bookEntity, memberEntity));
@@ -68,7 +68,7 @@ public class LendingServiceIMPL implements LendingService {
         var foundLending = lendingDao.findById(lendingId).orElseThrow(() -> new LendingDataNotFoundException("Lending data not found"));
         lendingDao.deleteById(lendingId);
         // add the book when the lending data is deleted
-        if(foundLending.getIsActiveLending() == true){
+        if(foundLending.getIsActiveLending() == "true"){
             bookDao.addBasedOnReturning(foundLending.getBook().getBookId());
         }
     }
@@ -84,7 +84,7 @@ public class LendingServiceIMPL implements LendingService {
 
         foundLending.setOverdueDays(overDue);
         foundLending.setFineAmount(fineAmount);
-        foundLending.setIsActiveLending(false);
+        foundLending.setIsActiveLending("false");
 
         // update book qty against bookId
         bookDao.addBasedOnReturning(foundLending.getBook().getBookId());
