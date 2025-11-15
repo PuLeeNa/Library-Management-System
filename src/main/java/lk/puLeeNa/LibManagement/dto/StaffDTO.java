@@ -21,13 +21,15 @@ public class StaffDTO implements Serializable {
     private Time lastUpdateTime;
     private String phone;
     private Role role;
+    private String username;
+    private String password;
 }
 
-//{
-//  "firstName": "John",
-//  "lastName": "Doe",
-//  "email": "ex@example.com",
-//  "joinDate": "2023-10-10",
-//  "phone": "0771234567",
-//  "role": "ADMIN"
-//        }
+// {
+// "firstName": "John",
+// "lastName": "Doe",
+// "email": "ex@example.com",
+// "joinDate": "2023-10-10",
+// "phone": "0771234567",
+// "role": "ADMIN"
+// }

@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @AllArgsConstructor // To generate a constructor with all arguments
 @Data // To generate getters, setters, toString, equals, and hashCode methods
 @Entity // To specify that this class is an entity and is mapped to a database table
-@Table(name="Staff")
+@Table(name = "Staff")
 public class StaffEntity {
     @Id // To specify the primary key of the entity
     private String staffId;
@@ -27,4 +27,6 @@ public class StaffEntity {
     private Time lastUpdateTime;
     private String phone;
     private Role role;
+    private String username;
+    private String password; // Should be BCrypt encoded
 }
