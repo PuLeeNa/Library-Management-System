@@ -1,5 +1,8 @@
 # 📚 LibraFlow - Library Management System (Backend)
 
+## Live Demo
+Check out the live project [here](https://libraflowmgmt.netlify.app)
+
 Link to Front-End - https://github.com/PuLeeNa/LibManagement-FE
 
 A RESTful API-based Library Management System built with Spring Boot for managing books, members, staff, and lending operations.
